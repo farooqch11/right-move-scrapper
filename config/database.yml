@@ -3,7 +3,7 @@ default: &default
   pool: 5
   encoding: unicode
   username: root
-  password: tkxel1234
+  password: root
   host: localhost
   port: 5432
 
@@ -20,4 +20,4 @@ test:
 
 production:
   <<: *default
-  database: right-move-production
+  database: right-move

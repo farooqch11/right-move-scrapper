@@ -47,6 +47,13 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+
+  gem "capistrano", "~> 3.10"
+  gem 'capistrano-rvm',     require: false
+  gem 'capistrano-rails',   require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-passenger', '~> 0.2.0'
+  gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq'
 end
 
 
@@ -71,3 +78,4 @@ gem 'capybara'
 gem 'pry'
 # gem 'geckodriver-helper' ,'>= 0.0.5'
 gem "chromedriver-helper"
+
