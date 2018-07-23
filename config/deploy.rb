@@ -5,7 +5,7 @@ lock "~> 3.11.0"
 set :repo_url,        'git@github.com:farooqch11/right-move-scrapper.git'
 set :application,     'right-move'
 # set :use_sudo,        true
-set :user,            "root"
+# set :user,            "root"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -25,9 +25,8 @@ set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
 # set :pty, true
 
 ## Linked Files & Directories (Default None):
-set :linked_files, %w{config/database.yml config/application.yml}
-# set :linked_dirs,  %w{log public/system }
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets }
+append :linked_files, "config/database.yml", "config/secrets.yml"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "vendor/bundle", "public/system", "public/uploads"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
