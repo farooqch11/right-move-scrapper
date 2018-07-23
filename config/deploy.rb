@@ -5,7 +5,7 @@ lock "~> 3.11.0"
 set :repo_url,        'git@github.com:farooqch11/right-move-scrapper.git'
 set :application,     'right-move'
 # set :use_sudo,        true
-# set :user,            "root"
+set :user,            "root"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
