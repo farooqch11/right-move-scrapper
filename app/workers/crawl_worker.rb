@@ -19,7 +19,7 @@ class CrawlWorker
           # profile['permissions.default.css']       = 2
           # profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
           proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13010', ssl: '83.149.70.159:13010'
-          # caps = Selenium::WebDriver::Remote::Capabilities.chrome(:proxy => proxy)
+          caps = Selenium::WebDriver::Remote::Capabilities.chrome(:proxy => proxy)
           options = Selenium::WebDriver::Chrome::Options.new(profile: profile)
           
           chrome_bin_path = ENV.fetch('GOOGLE_CHROME_SHIM', nil)
@@ -34,7 +34,7 @@ class CrawlWorker
           options.args << '--disable-gpu'
           options.args << '--disable-infobars'
 
-          Capybara::Selenium::Driver.new(app,browser: :chrome, options: options, http_client: client)
+          Capybara::Selenium::Driver.new(app,browser: :chrome, options: options, http_client: client,desired_capabilities: caps)
         end
 
         Capybara.javascript_driver = :chrome
