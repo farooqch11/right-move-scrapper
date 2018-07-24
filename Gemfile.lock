@@ -339,6 +339,7 @@ DEPENDENCIES
   csv
   devise
   dotenv
+  execjs
   figaro
   httparty
   jbuilder (~> 2.5)
