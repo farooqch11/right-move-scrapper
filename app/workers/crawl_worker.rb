@@ -47,17 +47,20 @@ class CrawlWorker
         browser = Capybara.current_session
         driver = browser.driver.browser
         # driver.manage.timeouts.page_load = 120
-
+          url_params = url
         (0..total_pages.to_i).each do |i|
 
-          if i > 0
-            url = url + "&index=#{i*24}&"
+          if i >0
+            url_to_visit = url_params + "&index=#{i*24}&"
+            puts url_to_visit
+          else
+            url_to_visit  = url_params
           end
 
-          puts url
+          puts url_to_visit
           puts i
 
-          browser.visit url
+          browser.visit url_to_visit
 
           # Link.create(url: url,page_number: i)
 
@@ -117,7 +120,7 @@ class CrawlWorker
               Property.create(title: title,location: location,asking_price: asking_price,last_sold_price: last_sold_price,upload_date:upload_date,url: page_url)
 
             rescue
-              puts "retrying "
+              puts "retrying ss"
               raise
             end
 
@@ -125,7 +128,9 @@ class CrawlWorker
         end
 
       rescue Exception
+        puts "retrying "
         raise
+
       end
 
 
