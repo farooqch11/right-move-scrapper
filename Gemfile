@@ -79,4 +79,6 @@ gem 'pry'
 # gem 'geckodriver-helper' ,'>= 0.0.5'
 gem "chromedriver-helper"
 
-gem 'therubyracer'
+gem 'execjs'
+
+gem 'therubyracer', :platforms => :ruby
