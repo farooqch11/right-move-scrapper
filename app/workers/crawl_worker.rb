@@ -50,11 +50,7 @@ class CrawlWorker
 
         (0..total_pages.to_i).each do |i|
 
-          if i==0
-            url = url
-          else
-            url = url + "&index=#{i*24}&"
-          end
+          url = url + "&index=#{i*24}&"
 
           puts url
           puts i
