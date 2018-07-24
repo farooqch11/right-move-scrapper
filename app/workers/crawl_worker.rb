@@ -18,7 +18,7 @@ class CrawlWorker
           profile['network.cookie.cookieBehavior']       = 2
           # profile['permissions.default.css']       = 2
           # profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
-          proxy = Selenium::WebDriver::Proxy.new http: '37.48.118.90:13040', ssl: '37.48.118.90:13040'
+          proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13010', ssl: '83.149.70.159:13010'
           # caps = Selenium::WebDriver::Remote::Capabilities.chrome(:proxy => proxy)
           options = Selenium::WebDriver::Chrome::Options.new(profile: profile)
           
