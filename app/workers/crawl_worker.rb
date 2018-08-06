@@ -94,7 +94,7 @@ class CrawlWorker
               browser.click_link('Market Info')
 
               loop do
-                sleep(2)
+                sleep(4)
                 if driver.execute_script('return document.readyState') == "complete"
                   break
 
