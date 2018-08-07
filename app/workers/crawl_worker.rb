@@ -107,7 +107,7 @@ class CrawlWorker
               asking_price = detail_page.xpath("//div[@class='property-header-bedroom-and-price ']/p[@id='propertyHeaderPrice']").text.squish;
               location = detail_page.xpath("//div[@class='property-header-bedroom-and-price ']/div[@class='left']/address[@class='pad-0 fs-16 grid-25']").text.squish;
 
-              last_sold_price = detail_page.xpath("//tr[1]/td[2]").text.squish;
+              last_sold_price = detail_page.xpath("//div[@id='soldHistoryBody']/table[@class='similar-nearby-sold-history-table']/tbody/tr[@class='bdr-b similar-nearby-sold-history-row-height'][1]/td[2]").text.squish;
               upload_date = detail_page.xpath("//*[@id='firstListedDateValue']").text.squish;
               puts "#######################################"
               puts title, asking_price ,last_sold_price, location
