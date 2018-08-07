@@ -24,7 +24,10 @@ ActiveAdmin.register Property do
     column :title
     column :asking_price
     column :last_sold_price
-    column :url
+    column :url do |property|
+      link_to property.full_url, property.full_url ,target: :_blank
+    end
+
     column :upload_date
     column :created_at
     actions
