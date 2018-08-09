@@ -12,35 +12,29 @@ class CrawlWorker
   def perform(url,total_pages)
 
       begin
-        Capybara.register_driver :chrome do |app|
-          profile = Selenium::WebDriver::Chrome::Profile.new
+        Capybara.register_driver :firefox do |app|
+          profile = Selenium::WebDriver::Firefox::Profile.new
           profile['permissions.default.image']       = 2
           profile['network.cookie.cookieBehavior']       = 2
           # profile['permissions.default.css']       = 2
           # profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
-          proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13010', ssl: '83.149.70.159:13010'
-          caps = Selenium::WebDriver::Remote::Capabilities.chrome(:proxy => proxy)
-          options = Selenium::WebDriver::Chrome::Options.new(profile: profile)
-          
-          chrome_bin_path = ENV.fetch('GOOGLE_CHROME_SHIM', nil)
-          options.binary = chrome_bin_path if chrome_bin_path # only use custom path on heroku
-          # options.add_argument('--headless') # this may be optional \
-
+          profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13010', ssl: '83.149.70.159:13010'
+          options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
           client = Selenium::WebDriver::Remote::Http::Default.new
           client.read_timeout = 150 # instead of the default 60
           client.open_timeout = 150 # instead of the default 60
-          options.args << '--headless'
+          # options.args << '--headless'
           options.args << '--no-sandbox'
           options.args << '--disable-gpu'
           options.args << '--disable-infobars'
 
-          Capybara::Selenium::Driver.new(app,browser: :chrome, options: options, http_client: client,desired_capabilities: caps)
+          Capybara::Selenium::Driver.new(app,browser: :firefox, options: options, http_client: client)
         end
 
-        Capybara.javascript_driver = :chrome
+        Capybara.javascript_driver = :firefox
         Capybara.configure do |config|
           # config.default_max_wait_time = 300 # seconds
-          config.default_driver = :chrome
+          config.default_driver = :firefox
         end
 
         # Visit
@@ -94,7 +88,7 @@ class CrawlWorker
               browser.click_link('Market Info')
 
               loop do
-                sleep(4)
+                sleep(5)
                 if driver.execute_script('return document.readyState') == "complete"
                   break
 

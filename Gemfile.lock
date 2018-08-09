@@ -137,6 +137,8 @@ GEM
     fugit (1.1.3)
       et-orbi (~> 1.1, >= 1.1.1)
       raabro (~> 1.1)
+    geckodriver-helper (0.21.0)
+      archive-zip (~> 0.7)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     has_scope (0.7.2)
@@ -341,6 +343,7 @@ DEPENDENCIES
   dotenv
   execjs
   figaro
+  geckodriver-helper (>= 0.0.5)
   httparty
   jbuilder (~> 2.5)
   json
