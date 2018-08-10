@@ -15,26 +15,18 @@ class CrawlWorker
         Capybara.register_driver :firefox do |app|
           profile = Selenium::WebDriver::Firefox::Profile.new
           profile['permissions.default.image']       = 2
-          profile['network.cookie.cookieBehavior']       = 2
-          # profile['permissions.default.css']       = 2
-          # profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
+          profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
           profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13010', ssl: '83.149.70.159:13010'
           options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
-          client = Selenium::WebDriver::Remote::Http::Default.new
-          client.read_timeout = 150 # instead of the default 60
-          client.open_timeout = 150 # instead of the default 60
-          caps = Selenium::WebDriver::Remote::Capabilities.firefox marionette: true
           options.args << '--headless'
-          # options.args << '--no-sandbox'
+          options.args << '--no-sandbox'
           # options.args << '--disable-gpu'
-          options.args << '--disable-infobars'
-
-          Capybara::Selenium::Driver.new(app,browser: :firefox, options: options, http_client: client,desired_capabilities: caps)
+          Capybara::Selenium::Driver.new :firefox, options: options
         end
 
         Capybara.javascript_driver = :firefox
         Capybara.configure do |config|
-          # config.default_max_wait_time = 300 # seconds
+          config.default_max_wait_time = 300 # seconds
           config.default_driver = :firefox
         end
 
