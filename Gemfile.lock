@@ -102,9 +102,6 @@ GEM
       xpath (~> 3.1)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
-    chromedriver-helper (1.2.0)
-      archive-zip (~> 0.10)
-      nokogiri (~> 1.8)
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -336,12 +333,10 @@ DEPENDENCIES
   capistrano-rvm
   capistrano-sidekiq!
   capybara
-  chromedriver-helper
   coffee-rails (~> 4.2)
   csv
   devise
   dotenv
-  execjs
   figaro
   geckodriver-helper (>= 0.0.5)
   httparty

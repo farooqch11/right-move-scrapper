@@ -77,8 +77,8 @@ gem 'nokogiri'
 gem 'capybara'
 gem 'pry'
 gem 'geckodriver-helper' ,'>= 0.0.5'
-gem "chromedriver-helper"
+# gem "chromedriver-helper"
 
-gem 'execjs'
+# gem 'execjs'
 
 gem 'therubyracer', :platforms => :ruby
