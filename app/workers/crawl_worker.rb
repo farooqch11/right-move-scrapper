@@ -1,13 +1,10 @@
-require 'rubygems'
-require 'selenium-webdriver'
-require 'nokogiri'
-require 'capybara'
-require 'csv'
-
 class CrawlWorker
 
   include Sidekiq::Worker
   sidekiq_options :retry => 5
+  require 'selenium-webdriver'
+  require 'nokogiri'
+  require 'capybara'
 
   def perform(url,total_pages)
 
