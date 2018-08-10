@@ -336,8 +336,9 @@ DEPENDENCIES
   csv
   devise
   dotenv
+  execjs
   figaro
-  geckodriver-helper
+  geckodriver-helper (>= 0.0.5)
   httparty
   jbuilder (~> 2.5)
   json
