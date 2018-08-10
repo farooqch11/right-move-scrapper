@@ -21,8 +21,8 @@ class CrawlWorker
           profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13010', ssl: '83.149.70.159:13010'
           options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
           client = Selenium::WebDriver::Remote::Http::Default.new
-          # client.read_timeout = 150 # instead of the default 60
-          # client.open_timeout = 150 # instead of the default 60
+          client.read_timeout = 150 # instead of the default 60
+          client.open_timeout = 150 # instead of the default 60
           caps = Selenium::WebDriver::Remote::Capabilities.firefox marionette: true
           options.args << '--headless'
           # options.args << '--no-sandbox'
