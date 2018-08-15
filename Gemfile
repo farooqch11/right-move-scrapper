@@ -77,3 +77,6 @@ gem 'nokogiri'
 gem 'capybara'
 gem 'pry'
 gem 'geckodriver-helper' ,'>= 0.0.5'
+gem 'execjs'
+
+gem 'therubyracer', :platforms => :ruby
