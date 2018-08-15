@@ -16,12 +16,14 @@ class CrawlWorker
           profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13010', ssl: '83.149.70.159:13010'
           options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
           caps = Selenium::WebDriver::Remote::Capabilities.firefox marionette: true
-
+          client = Selenium::WebDriver::Remote::Http::Default.new
+          client.read_timeout = 150 # instead of the default 60
+          client.open_timeout = 150 # instead of the default 60
           options.args << '--headless'
           options.args << '--no-sandbox'
           options.args << '--disable-infobars'
           # options.args << '--disable-gpu'
-          Capybara::Selenium::Driver.new :firefox, options: options, desired_capabilities: caps
+          Capybara::Selenium::Driver.new :firefox, options: options, desired_capabilities: caps ,http_client: client
         end
 
         Capybara.javascript_driver = :firefox
