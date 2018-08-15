@@ -15,10 +15,13 @@ class CrawlWorker
           # profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
           profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13010', ssl: '83.149.70.159:13010'
           options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
+          caps = Selenium::WebDriver::Remote::Capabilities.firefox marionette: true
+
           options.args << '--headless'
           options.args << '--no-sandbox'
+          options.args << '--disable-infobars'
           # options.args << '--disable-gpu'
-          Capybara::Selenium::Driver.new :firefox, options: options
+          Capybara::Selenium::Driver.new :firefox, options: options, desired_capabilities: caps
         end
 
         Capybara.javascript_driver = :firefox
