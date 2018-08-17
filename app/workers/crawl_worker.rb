@@ -13,7 +13,7 @@ class CrawlWorker
           profile = Selenium::WebDriver::Firefox::Profile.new
           profile['permissions.default.image']       = 2
           # profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
-          profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13010', ssl: '83.149.70.159:13010'
+          profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13012', ssl: '83.149.70.159:13012'
           options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
           caps = Selenium::WebDriver::Remote::Capabilities.firefox marionette: true
           client = Selenium::WebDriver::Remote::Http::Default.new
