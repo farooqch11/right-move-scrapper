@@ -12,6 +12,7 @@ class CrawlWorker
         Capybara.register_driver :firefox do |app|
           profile = Selenium::WebDriver::Firefox::Profile.new
           profile['permissions.default.image']       = 2
+          profile['network.proxy.type']       = "manual"
           # profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
           profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13012', ssl: '83.149.70.159:13012'
           options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
