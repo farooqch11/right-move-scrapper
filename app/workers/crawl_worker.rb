@@ -12,15 +12,15 @@ class CrawlWorker
         Capybara.register_driver :firefox do |app|
           profile = Selenium::WebDriver::Firefox::Profile.new
           profile['permissions.default.image']       = 2
-          profile['network.proxy.type']       = "manual"
-          # profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
-          # profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13012', ssl: '83.149.70.159:13012'
+          profile['network.proxy.type']       = 'manual'
+          profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
+           profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13012', ssl: '83.149.70.159:13012'
           options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
           caps = Selenium::WebDriver::Remote::Capabilities.firefox marionette: true
           client = Selenium::WebDriver::Remote::Http::Default.new
           client.read_timeout = 150 # instead of the default 60
           client.open_timeout = 150 # instead of the default 60
-          options.args << '--headless'
+          # options.args << '--headless'
           options.args << '--no-sandbox'
           options.args << '--disable-infobars'
           # options.args << '--disable-gpu'
@@ -29,7 +29,7 @@ class CrawlWorker
 
         Capybara.javascript_driver = :firefox
         Capybara.configure do |config|
-          config.default_max_wait_time = 300 # seconds
+          config.default_max_wait_time = 150 # seconds
           config.default_driver = :firefox
         end
 
@@ -74,12 +74,7 @@ class CrawlWorker
                 next
               end
 
-              begin
-                browser.visit "https://www.rightmove.co.uk#{page_url}"
-              rescue
-                next
-              end
-
+              browser.visit "https://www.rightmove.co.uk#{page_url}"
 
               browser.click_link('Market Info')
 

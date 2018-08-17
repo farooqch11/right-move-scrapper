@@ -36,7 +36,7 @@ ActiveAdmin.register Property do
     link_to "Start Job", start_job_admin_properties_path
   end
 
-  collection_action :start_job, title: "Start Scraping"  do
+  collection_action :start_job, title: "Start Scrapingg"  do
     # Nothing here. We just want to render the form.
 
   end
