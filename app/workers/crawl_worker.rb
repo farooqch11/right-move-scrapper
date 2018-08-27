@@ -2,9 +2,9 @@ class CrawlWorker
 
   include Sidekiq::Worker
   sidekiq_options :retry => 5
-  require 'selenium-webdriver'
-  require 'nokogiri'
-  require 'capybara'
+  # require 'selenium-webdriver'
+  # require 'nokogiri'
+  # require 'capybara'
 
   def perform(url,total_pages)
 
@@ -20,7 +20,7 @@ class CrawlWorker
           client = Selenium::WebDriver::Remote::Http::Default.new
           client.read_timeout = 150 # instead of the default 60
           client.open_timeout = 150 # instead of the default 60
-          # options.args << '--headless'
+          options.args << '--headless'
           options.args << '--no-sandbox'
           options.args << '--disable-infobars'
           # options.args << '--disable-gpu'
