@@ -21,7 +21,7 @@ class CrawlWorker
           client.read_timeout = 150 # instead of the default 60
           client.open_timeout = 150 # instead of the default 60
           options.args << '--headless'
-          options.args << '--no-sandbox'
+          # options.args << '--no-sandbox'
           options.args << '--disable-infobars'
           # options.args << '--disable-gpu'
           Capybara::Selenium::Driver.new :firefox, options: options, desired_capabilities: caps ,http_client: client
