@@ -6,7 +6,7 @@ class CrawlWorker
   # require 'nokogiri'
   # require 'capybara'
 
-  def perform(url,total_pages)
+  def perform(url="https://www.rightmove.co.uk/property-for-sale/find.html?searchType=SALE&locationIdentifier=REGION%5E1498&insId=1&radius=0.0&minPrice=&maxPrice=&minBedrooms=&maxBedrooms=&displayPropertyType=&maxDaysSinceAdded=&_includeSSTC=on&sortByPriceDescending=&primaryDisplayPropertyType=&secondaryDisplayPropertyType=&oldDisplayPropertyType=&oldPrimaryDisplayPropertyType=&newHome=&auction=false",total_pages=1)
 
       begin
         Capybara.register_driver :firefox do |app|
@@ -14,7 +14,7 @@ class CrawlWorker
           profile['permissions.default.image']       = 2
           profile['network.proxy.type']       = 'manual'
           profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
-           profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13012', ssl: '83.149.70.159:13012'
+          profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13012', ssl: '83.149.70.159:13012'
           options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
           caps = Selenium::WebDriver::Remote::Capabilities.firefox marionette: true
           client = Selenium::WebDriver::Remote::Http::Default.new
