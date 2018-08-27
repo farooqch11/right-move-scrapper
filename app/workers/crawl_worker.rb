@@ -10,6 +10,8 @@ class CrawlWorker
 
       begin
         Capybara.register_driver :firefox do |app|
+          require 'selenium/webdriver'
+          Selenium::WebDriver::Firefox.driver_path = '/usr/bin/geckodrive'
           profile = Selenium::WebDriver::Firefox::Profile.new
           profile['permissions.default.image']       = 2
           profile['network.proxy.type']       = 'manual'
