@@ -14,7 +14,7 @@ class CrawlWorker
           profile['permissions.default.image']       = 2
           profile['network.proxy.type']       = 'manual'
           profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
-          profile.proxy = Selenium::WebDriver::Proxy.new http: '83.149.70.159:13010', ssl: '83.149.70.159:13010'
+          profile.proxy = Selenium::WebDriver::Proxy.new http: '37.48.118.90:13040', ssl: '37.48.118.90:13040'
           options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
           caps = Selenium::WebDriver::Remote::Capabilities.firefox marionette: true
           client = Selenium::WebDriver::Remote::Http::Default.new
@@ -32,7 +32,6 @@ class CrawlWorker
           config.default_max_wait_time = 150 # seconds
           config.default_driver = :firefox
         end
-
         # Visit
         browser = Capybara.current_session
         driver = browser.driver.browser
