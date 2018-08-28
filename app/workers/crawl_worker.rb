@@ -42,10 +42,11 @@ class CrawlWorker
 
         Capybara.register_driver :poltergeist do |app|
           Capybara::Poltergeist::Driver.new app,
-                                            phantomjs_options: ['--load-images=no','--ignore-ssl-errors=yes','--proxy-type=http','--ssl-protocol=tlsv1','--proxy=37.48.118.90:13040'],
+                                            phantomjs_options: ['--web-security=false','--load-images=no','--ignore-ssl-errors=yes','--proxy-type=http','--ssl-protocol=tlsv1','--proxy=37.48.118.90:13040'],
                                             js_errors: false,
                                             inspector: false,
-                                            debug: false
+                                            debug: false,
+                                            timeout: 1.minute
         end
         Capybara.default_driver = :poltergeist
         Capybara.javascript_driver = :poltergeist
