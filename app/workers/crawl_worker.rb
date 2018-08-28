@@ -5,34 +5,54 @@ class CrawlWorker
   # require 'selenium-webdriver'
   # require 'nokogiri'
   # require 'capybara'
+  require 'rubygems'
+  require 'capybara'
+  require 'capybara/dsl'
+  require 'capybara/poltergeist'
 
   def perform(url="https://www.rightmove.co.uk/property-for-sale/find.html?searchType=SALE&locationIdentifier=REGION%5E1498&insId=1&radius=0.0&minPrice=&maxPrice=&minBedrooms=&maxBedrooms=&displayPropertyType=&maxDaysSinceAdded=&_includeSSTC=on&sortByPriceDescending=&primaryDisplayPropertyType=&secondaryDisplayPropertyType=&oldDisplayPropertyType=&oldPrimaryDisplayPropertyType=&newHome=&auction=false",total_pages=1)
 
       begin
-        Capybara.register_driver :firefox do |app|
-          require 'selenium/webdriver'
-          # Selenium::WebDriver::Firefox.driver_path = '/usr/local/bin/geckodriver'
-          profile = Selenium::WebDriver::Firefox::Profile.new
-          profile['permissions.default.image']       = 2
-          profile['network.proxy.type']       = 'manual'
-          profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
-          profile.proxy = Selenium::WebDriver::Proxy.new http: '37.48.118.90:13040', ssl: '37.48.118.90:13040'
-          options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
-          caps = Selenium::WebDriver::Remote::Capabilities.firefox marionette: true
-          client = Selenium::WebDriver::Remote::Http::Default.new
-          client.timeout = 120
-          options.args << '--headless'
-          # options.args << '--no-sandbox'
-          options.args << '--disable-infobars'
-          # options.args << '--disable-gpu'
-          Capybara::Selenium::Driver.new :firefox, options: options, desired_capabilities: caps ,http_client: client
-        end
+        # Capybara.register_driver :firefox do |app|
+        #   require 'selenium/webdriver'
+        #   # Selenium::WebDriver::Firefox.driver_path = '/usr/local/bin/geckodriver'
+        #   profile = Selenium::WebDriver::Firefox::Profile.new
+        #   profile['permissions.default.image']       = 2
+        #   profile['network.proxy.type']       = 'manual'
+        #   profile['general.useragent.override'] = "Mozilla/5.0 (Macintosh; U; PPC Mac OS X; en) AppleWebKit/418.9 (KHTML, like Gecko) Hana/1.1"
+        #   profile.proxy = Selenium::WebDriver::Proxy.new http: '37.48.118.90:13040', ssl: '37.48.118.90:13040'
+        #   options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
+        #   caps = Selenium::WebDriver::Remote::Capabilities.firefox marionette: true
+        #   client = Selenium::WebDriver::Remote::Http::Default.new
+        #   client.timeout = 120
+        #   options.args << '--headless'
+        #   # options.args << '--no-sandbox'
+        #   options.args << '--disable-infobars'
+        #   # options.args << '--disable-gpu'
+        #   Capybara::Selenium::Driver.new :firefox, options: options, desired_capabilities: caps ,http_client: client
+        # end
+        #
+        # Capybara.javascript_driver = :firefox
+        # Capybara.configure do |config|
+        #   config.default_max_wait_time = 150 # seconds
+        #   config.default_driver = :firefox
+        # end
 
-        Capybara.javascript_driver = :firefox
-        Capybara.configure do |config|
-          config.default_max_wait_time = 150 # seconds
-          config.default_driver = :firefox
+
+
+        Capybara.register_driver :poltergeist do |app|
+          Capybara::Poltergeist::Driver.new app,
+                                            phantomjs_options: ['--load-images=no','--ignore-ssl-errors=yes'],
+                                            js_errors: false,
+                                            inspector: false,
+                                            debug: false
         end
+        Capybara.default_driver = :poltergeist
+        Capybara.javascript_driver = :poltergeist
+        Capybara.default_max_wait_time = 120
+        Capybara.ignore_hidden_elements = true
+        Capybara.run_server = false
+
         # Visit
         browser = Capybara.current_session
         driver = browser.driver.browser
@@ -53,8 +73,7 @@ class CrawlWorker
           browser.visit url_to_visit
 
           # Link.create(url: url,page_number: i)
-
-          main_page = Nokogiri::HTML(driver.page_source)
+          main_page = Nokogiri::HTML(driver.body)
 
           urls = main_page.xpath("//div[@class='propertyCard-section']/div[@class='propertyCard-details']/a[@class='propertyCard-link']/@href");
 
@@ -80,13 +99,12 @@ class CrawlWorker
 
               loop do
                 sleep(2)
-                if driver.execute_script('return document.readyState') == "complete"
+                if driver.evaluate("document.readyState") == "complete"
                   break
-
                 end
               end
 
-              detail_page = Nokogiri::HTML(driver.page_source)
+              detail_page = Nokogiri::HTML(driver.body)
 
               title = detail_page.xpath('//h1').text.squish;
               asking_price = detail_page.xpath("//div[@class='property-header-bedroom-and-price ']/p[@id='propertyHeaderPrice']").text.squish;
@@ -104,18 +122,19 @@ class CrawlWorker
 
               Property.create(title: title,location: location,asking_price: asking_price,last_sold_price: last_sold_price,upload_date:upload_date,url: page_url)
 
-            rescue
-              puts "retrying ss"
+            rescue => exception
+              puts exception
+              puts retrying
               raise
             end
 
           end
         end
 
-      rescue Exception
-        puts "retrying "
+      rescue => exception
+        puts exception
+        puts retrying
         raise
-
       end
 
 
