@@ -42,7 +42,7 @@ class CrawlWorker
 
         Capybara.register_driver :poltergeist do |app|
           Capybara::Poltergeist::Driver.new app,
-                                            phantomjs_options: ['--load-images=no','--ignore-ssl-errors=yes',"--proxy=37.48.118.90:13040"],
+                                            phantomjs_options: ['--load-images=no','--ignore-ssl-errors=yes','--proxy-type=https',"--proxy=37.48.118.90:13040"],
                                             js_errors: false,
                                             inspector: false,
                                             debug: false
