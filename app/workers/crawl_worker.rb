@@ -124,7 +124,6 @@ class CrawlWorker
 
             rescue => exception
               puts exception
-              puts retrying
               raise
             end
 
@@ -133,7 +132,6 @@ class CrawlWorker
 
       rescue => exception
         puts exception
-        puts retrying
         raise
       end
 
