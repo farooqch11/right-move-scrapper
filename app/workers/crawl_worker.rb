@@ -20,8 +20,7 @@ class CrawlWorker
           options = Selenium::WebDriver::Firefox::Options.new(profile: profile)
           caps = Selenium::WebDriver::Remote::Capabilities.firefox marionette: true
           client = Selenium::WebDriver::Remote::Http::Default.new
-          client.read_timeout = 150 # instead of the default 60
-          client.open_timeout = 150 # instead of the default 60
+          client.timeout = 120
           options.args << '--headless'
           # options.args << '--no-sandbox'
           options.args << '--disable-infobars'
