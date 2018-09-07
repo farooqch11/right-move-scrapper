@@ -134,8 +134,7 @@ class CrawlWorker
             Property.create(title: title,location: location,asking_price: asking_price,last_sold_price: last_sold_price,upload_date:upload_date,url: page_url)
 
           rescue => exception
-            puts exception
-            raise
+            next
           end
 
         end
