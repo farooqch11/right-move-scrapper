@@ -42,12 +42,11 @@ class CrawlWorker
 
       Capybara.register_driver :poltergeist do |app|
         Capybara::Poltergeist::Driver.new app,
-                                          phantomjs_options: [ '--ignore-ssl-errors=no',
-                                                               '--ssl-protocol=any',
-                                                               '--web-security=true',
+                                          phantomjs_options: [ '--ignore-ssl-errors=yes',
                                                                '--load-images=no',
-                                                               '--proxy-type=none',
-                                                               '--proxy=83.149.70.159:13012'],
+                                                               '--proxy=zproxy.lum-superproxy.io:22225',
+                                                              '--proxy-auth=lum-customer-hl_92887fb2-zone-static:7v9rn5y28wfs'
+                                                              ],
                                           js_errors: false,
                                           inspector: false,
                                           debug: true,
@@ -64,6 +63,7 @@ class CrawlWorker
       browser = Capybara.current_session
       browser.driver.headers = { "User-Agent" => "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0 Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0." }
       driver = browser.driver.browser
+      # driver.basic_authorize('lum-customer-hl_92887fb2-zone-static','7v9rn5y28wfs')
 
 
 
