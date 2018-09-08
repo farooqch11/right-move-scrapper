@@ -66,7 +66,6 @@ class CrawlWorker
       # driver.basic_authorize('lum-customer-hl_92887fb2-zone-static','7v9rn5y28wfs')
 
 
-
       # driver.manage.timeouts.page_load = 120
       url_params = url
       (0..total_pages.to_i).each do |i|
@@ -80,7 +79,7 @@ class CrawlWorker
 
         puts url_to_visit
         puts i
-
+        driver.restart if defined?(driver.restart)
         browser.visit url_to_visit
 
         # Link.create(url: url,page_number: i)
