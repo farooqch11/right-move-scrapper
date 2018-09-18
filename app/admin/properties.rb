@@ -24,6 +24,7 @@ ActiveAdmin.register Property do
     column :title
     column :asking_price
     column :last_sold_price
+    column :equity_percentage
     column :url do |property|
       link_to property.full_url, property.full_url ,target: :_blank
     end

@@ -125,12 +125,27 @@ class CrawlWorker
             puts "#######################################"
             puts title, asking_price ,last_sold_price, location
 
+            if (asking_price.include? "shared") || (asking_price.include? "*") || !last_sold_price.present?
+              next
+            end
+
+
             asking_price = asking_price.gsub('From', '')
             asking_price = asking_price.gsub('Offers in Region of', '')
             asking_price = asking_price.gsub('Guide Price', '')
+            asking_price = asking_price.gsub('Offers Over', '')
+            asking_price = asking_price.gsub('Fixed Price', '')
+            asking_price = asking_price.gsub('Offers in Excess', '')
+            asking_price_int = asking_price.gsub('$', '')
+
+            equity_percentage = (asking_price_int.to_i/last_sold_price.to_i)*100
+
+            if equity_percentage > 105
+              next
+            end
 
 
-            Property.create(title: title,location: location,asking_price: asking_price,last_sold_price: last_sold_price,upload_date:upload_date,url: page_url)
+            Property.create(equity_percentage: equity_percentage,title: title,location: location,asking_price: asking_price,last_sold_price: last_sold_price,upload_date:upload_date,url: page_url)
 
           rescue => exception
             next

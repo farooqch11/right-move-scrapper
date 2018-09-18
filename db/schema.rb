@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_19_074719) do
+ActiveRecord::Schema.define(version: 2018_09_18_095438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2018_07_19_074719) do
     t.boolean "letter_sent", default: false
     t.boolean "unfindable", default: false
     t.boolean "complete", default: false
+    t.integer "equity_percentage"
   end
 
 end
