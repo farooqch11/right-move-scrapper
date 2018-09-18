@@ -49,7 +49,6 @@ class CrawlWorker
                                                               ],
                                           js_errors: false,
                                           inspector: false,
-                                          debug: true,
                                           timeout: 120
       end
       Capybara.default_driver = :poltergeist
@@ -126,6 +125,9 @@ class CrawlWorker
             puts title, asking_price ,last_sold_price, location
 
             if (asking_price.include? "shared") || (asking_price.include? "*") || !last_sold_price.present?
+              puts "going nextttttttttt"
+              puts asking_price
+              puts last_sold_price
               next
             end
 
@@ -136,11 +138,18 @@ class CrawlWorker
             asking_price = asking_price.gsub('Offers Over', '')
             asking_price = asking_price.gsub('Fixed Price', '')
             asking_price = asking_price.gsub('Offers in Excess', '')
-            asking_price_int = asking_price.gsub('$', '')
 
-            equity_percentage = (asking_price_int.to_i/last_sold_price.to_i)*100
+            asking_price_int = asking_price.gsub('£', '')
+            asking_price_int = asking_price.gsub(',', '')
+            last_sold_price_int = last_sold_price.gsub('£', '')
+            last_sold_price_int = last_sold_price.gsub(',', '')
+
+
+
+            equity_percentage = (asking_price_int.to_i/last_sold_price_int.to_i)*100
 
             if equity_percentage > 105
+              puts "going nextttttttttt percent"
               next
             end
 
