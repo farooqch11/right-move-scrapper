@@ -10,7 +10,7 @@ class CrawlWorker
   require 'capybara/dsl'
   require 'capybara/poltergeist'
 
-  def perform(url="https://www.rightmove.co.uk/property-for-sale/find.html?searchType=SALE&locationIdentifier=REGION%5E1498&insId=1&radius=0.0&minPrice=&maxPrice=&minBedrooms=&maxBedrooms=&displayPropertyType=&maxDaysSinceAdded=&_includeSSTC=on&sortByPriceDescending=&primaryDisplayPropertyType=&secondaryDisplayPropertyType=&oldDisplayPropertyType=&oldPrimaryDisplayPropertyType=&newHome=&auction=false",total_pages=1)
+  def perform(url="https://www.rightmove.co.uk/property-for-sale/find.html?locationIdentifier=REGION%5E933&minBedrooms=3&maxPrice=100000&minPrice=100000&propertyTypes=detached%2Csemi-detached%2Cterraced&primaryDisplayPropertyType=houses&includeSSTC=false",total_pages=1)
 
     begin
       # Capybara.register_driver :firefox do |app|
@@ -148,11 +148,11 @@ class CrawlWorker
 
             equity_percentage = (asking_price_int.to_f/last_sold_price_int.to_f)*100
             #
-            # if equity_percentage > 105
-            #   puts "going nextttttttttt percent"
-            #   puts equity_percentage
-            #   next
-            # end
+            if equity_percentage > 105
+              puts "going nextttttttttt percent"
+              puts equity_percentage
+              next
+            end
             #
             # byebug
 
