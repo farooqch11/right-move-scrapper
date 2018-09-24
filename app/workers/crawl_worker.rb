@@ -147,20 +147,20 @@ class CrawlWorker
             last_sold_price_int = last_sold_price_int.gsub(',', '')
 
             equity_percentage = (asking_price_int.to_f/last_sold_price_int.to_f)*100
-
-            if equity_percentage > 105
-              puts "going nextttttttttt percent"
-              puts equity_percentage
-              next
-            end
-
-            byebug
+            #
+            # if equity_percentage > 105
+            #   puts "going nextttttttttt percent"
+            #   puts equity_percentage
+            #   next
+            # end
+            #
+            # byebug
 
 
             Property.create(equity_percentage: equity_percentage,title: title,location: location,asking_price: asking_price,last_sold_price: last_sold_price,upload_date:upload_date,url: page_url)
 
           rescue => exception
-            next
+            raise
           end
 
         end
