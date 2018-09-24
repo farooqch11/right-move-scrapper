@@ -123,8 +123,7 @@ class CrawlWorker
             upload_date = detail_page.xpath("//*[@id='firstListedDateValue']").text.squish;
             puts "#######################################"
             puts title, asking_price ,last_sold_price, location
-
-            if (asking_price.include? "shared") || (asking_price.include? "*") || !last_sold_price.present?
+            if (asking_price.include? "shared") || (asking_price.include? "*") || !(last_sold_price.present?)
               puts "going nextttttttttt"
               puts asking_price
               puts last_sold_price
@@ -132,26 +131,30 @@ class CrawlWorker
             end
 
 
-            asking_price = asking_price.gsub('From', '')
-            asking_price = asking_price.gsub('Offers in Region of', '')
-            asking_price = asking_price.gsub('Guide Price', '')
-            asking_price = asking_price.gsub('Offers Over', '')
-            asking_price = asking_price.gsub('Fixed Price', '')
-            asking_price = asking_price.gsub('Offers in Excess', '')
+            # asking_price = asking_price.gsub('From', '')
+            # asking_price = asking_price.gsub('Offers in Region of', '')
+            # asking_price = asking_price.gsub('Guide Price', '')
+            # asking_price = asking_price.gsub('Offers Over', '')
+            # asking_price = asking_price.gsub('Fixed Price', '')
+            # asking_price = asking_price.gsub('Offers in Excess', '')
+            asking_price = asking_price.gsub(/\D/, "")
+            last_sold_price = last_sold_price.gsub(/\D/, "")
+
 
             asking_price_int = asking_price.gsub('£', '')
-            asking_price_int = asking_price.gsub(',', '')
+            asking_price_int = asking_price_int.gsub(',', '')
             last_sold_price_int = last_sold_price.gsub('£', '')
-            last_sold_price_int = last_sold_price.gsub(',', '')
+            last_sold_price_int = last_sold_price_int.gsub(',', '')
 
-
-
-            equity_percentage = (asking_price_int.to_i/last_sold_price_int.to_i)*100
+            equity_percentage = (asking_price_int.to_f/last_sold_price_int.to_f)*100
 
             if equity_percentage > 105
               puts "going nextttttttttt percent"
+              puts equity_percentage
               next
             end
+
+            byebug
 
 
             Property.create(equity_percentage: equity_percentage,title: title,location: location,asking_price: asking_price,last_sold_price: last_sold_price,upload_date:upload_date,url: page_url)
